@@ -18,11 +18,10 @@ const config = {
   url: process.env.URL,
   login: process.env.LOGIN,
   password: process.env.PASSWORD
- };
+};
 
 dialer.configure(config);
 
-// Serwer nasłuchuje na porcie 3000
 const serverInstance = httpServer.listen(3000, function () {
  console.log('Example app listening on port 3000!')
 })
@@ -37,27 +36,27 @@ const number2 = req.params.number2;
 })
 
 httpServer.post('/call/', async (req, res) => {
-    const number1 = req.body.number;
-    const number2 = process.env.PHONE
-     console.log('Dzwonie', number1, number2)
-    const bridge = await dialer.call(number1, number2);
-    let oldStatus = null
-    let interval = setInterval(async () => {
-      let currentStatus = await bridge.getStatus();
-      if (currentStatus !== oldStatus) {
-         oldStatus = currentStatus
-         io.emit('status', currentStatus)
-      }
-      if (
-        currentStatus === "ANSWERED" ||
-        currentStatus === "FAILED" ||
-        currentStatus === "BUSY" ||
-        currentStatus === "NO ANSWER"
-    ) {
-        console.log('stop')
-        clearInterval(interval)
+  const number1 = req.body.number;
+  const number2 = process.env.PHONE
+  console.log('Dzwonie', number1, number2)
+  const bridge = await dialer.call(number1, number2);
+  let oldStatus = null
+  let interval = setInterval(async () => {
+    let currentStatus = await bridge.getStatus();
+    if (currentStatus !== oldStatus) {
+      oldStatus = currentStatus
+      io.emit('status', currentStatus)
     }
-   }, 1000)
-   res.json({ id: '123', status: bridge.STATUSES.NEW 
-   });
-        })
+    if (
+      currentStatus === "ANSWERED" ||
+      currentStatus === "FAILED" ||
+      currentStatus === "BUSY" ||
+      currentStatus === "NO ANSWER"
+    ) {
+      console.log('stop')
+      clearInterval(interval)
+    }
+  }, 1000)
+  res.json({ id: '123', status: bridge.STATUSES.NEW 
+  });
+})

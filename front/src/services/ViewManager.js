@@ -40,7 +40,4 @@ class ViewManager {
   }
 }
 
-
-
 export default new ViewManager()
-
