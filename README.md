@@ -9,4 +9,5 @@ PHONE = 'phone'
 4. Open new terminal and use this commands: "cd backend", "npm install", "node index.js". (Navigate to backend folder, install dependencies, start backend server).
 5. Open new terminal and use this commands: "cd front", "gp env -u VUE_APP_SERVER_URL", "gp env VUE_APP_SERVER_URL=$(gp url 
 3000)", "eval $(gp env -e)", "npm install", "npm run serve". (Navigate to front folder, change server url's variable, install dependencies, start development server).
-6. Now you should have development server running via localhost.
+6. Make both ports public via 'ports' tab in VS Code.
+7. Now you should have development server running via localhost.
