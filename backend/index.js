@@ -4,6 +4,7 @@ const dialer = require('dialer').Dialer;
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { Server } = require('socket.io');
+require('dotenv').config()
 
 httpServer.use(bodyParser.json());
 httpServer.use(cors());
@@ -13,11 +14,11 @@ httpServer.use((req, res, next) => {
  next();
 });
 
-const config = { // dane wrazliwe
- url: 'https://uni-call.fcc-online.pl',
- login: 'focus01',
- password: '#3j34refgdfb'
-};
+const config = {
+  url: process.env.URL,
+  login: process.env.LOGIN,
+  password: process.env.PASSWORD
+ };
 
 dialer.configure(config);
 
@@ -37,7 +38,7 @@ const number2 = req.params.number2;
 
 httpServer.post('/call/', async (req, res) => {
     const number1 = req.body.number;
-    const number2 = '732008865' // tutaj dejemy swój numer (dane wrazliwe)
+    const number2 = process.env.PHONE
      console.log('Dzwonie', number1, number2)
     const bridge = await dialer.call(number1, number2);
     let oldStatus = null
